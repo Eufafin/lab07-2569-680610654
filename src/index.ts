@@ -30,7 +30,7 @@ app.get("/", (req: Request, res: Response) => {
 
 // GET /students
 // get students (by program)
-app.get("/students", (req: Request, res: Response) => {
+app.get("/api/students", (req: Request, res: Response) => {
   try {
     const program = req.query.program;
     const studentId = req.query.studentId;
@@ -60,7 +60,7 @@ app.get("/students", (req: Request, res: Response) => {
 
 // POST /students, body = {new student data}
 // add a new student
-app.post("/students", (req: Request, res: Response) => {
+app.post("/api/students", (req: Request, res: Response) => {
   try {
     const body = req.body as Student;
 
@@ -89,7 +89,7 @@ app.post("/students", (req: Request, res: Response) => {
     students.push(new_student);
 
     // add response header 'Link'
-    res.set("Link", `/students/${new_student.studentId}`);
+    res.set("Link", `/api/students/${new_student.studentId}`);
 
     return res.json({
       success: true,
@@ -107,7 +107,7 @@ app.post("/students", (req: Request, res: Response) => {
 
 // PUT /students, body = {studentId}
 // Update specified student
-app.put("/students", (req: Request, res: Response) => {
+app.put("/api/students", (req: Request, res: Response) => {
   try {
     const body = req.body as Student;
 
@@ -136,7 +136,7 @@ app.put("/students", (req: Request, res: Response) => {
     students[foundIndex] = { ...students[foundIndex], ...body };
 
     // add response header 'Link'
-    res.set("Link", `/students/${body.studentId}`);
+    res.set("Link", `/api/students/${body.studentId}`);
 
     return res.json({
       success: true,
@@ -153,7 +153,7 @@ app.put("/students", (req: Request, res: Response) => {
 });
 
 // DELETE /students, body = {studentId}
-app.delete("/students", (req: Request, res: Response) => {
+app.delete("/api/students", (req: Request, res: Response) => {
   const {studentId} = req.body;
   if(!studentId){
     return res.status(400).json({
@@ -189,7 +189,7 @@ app.delete("/students", (req: Request, res: Response) => {
 });
 
 // GET /api/me
-app.get("/me", (req: Request, res: Response) => {
+app.get("/api/me", (req: Request, res: Response) => {
 	
   return res.status(200).json({
 	 success:true,
