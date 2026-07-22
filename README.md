@@ -6,7 +6,7 @@
 
 ชื่อ-สกุล : กิตติพัฒน์ นามจักร์
 
-Vercel URL : 
+Vercel URL : https://lab07-2569-680610654-63il.vercel.app/
 
 ---
 
