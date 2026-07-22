@@ -11,6 +11,8 @@ import {
   zStudentPostBody,
   zStudentPutBody,
 } from "@libs/studentValidator.js";
+import { success } from 'zod';
+import { fa } from 'zod/locales';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -29,23 +31,23 @@ app.get("/", (req: Request, res: Response) => {
 app.get("/students", (req: Request, res: Response) => {
   try {
     const program = req.query.program;
+    const studentId = req.query.studentId;
 
+    let filtered_students = students;
     if (program) {
-      let filtered_students = students.filter(
+      filtered_students = filtered_students.filter(
         (student) => student.program === program
       );
-      return res.json({
+    } if (studentId) {
+      filtered_students = filtered_students.filter(
+        (student) => student.studentId === studentId
+      );
+      
+    } return res.json({
         success: true,
         data: filtered_students,
       });
-    } else {
-      return res.json({
-        success: true,
-        count: students.length,
-        data: students,
-      });
-    }
-  } catch (err) {
+  }catch (err) {
     return res.json({
       success: false,
       message: "Something is wrong, please try again",
@@ -150,9 +152,38 @@ app.put("/students", (req: Request, res: Response) => {
 
 // DELETE /students, body = {studentId}
 app.delete("/students", (req: Request, res: Response) => {
-  res.json({
-    message: "Implement this!"
-  })
+  const {studentId} = req.body;
+  if(!studentId){
+    return res.status(400).json({
+      success:false,
+      message: "studentId is required!"
+    })
+  }
+  if(studentId.length !== 9){
+    console.log(typeof(studentId))
+    return res.status(400).json({
+      success: false,
+      message: "student id must be 9 digits"
+    })
+    
+  }else{
+    const index = students.findIndex(student => student.studentId == studentId);
+    if(index == -1){
+      return res.status(404).json({
+        success:false,
+        message: "Student not found"
+      })
+    }else{
+      students.splice(index, 1);
+      return res.json({
+        success:true,
+        message: "Student has been deleted!"
+      })
+    }
+  }
+  console.log(req.body)
+  console.log(studentId)
+
 });
 
 // GET /api/me
