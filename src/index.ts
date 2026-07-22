@@ -26,6 +26,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("API services for Student Data");
 });
 
+
+
 // GET /students
 // get students (by program)
 app.get("/students", (req: Request, res: Response) => {
@@ -187,6 +189,19 @@ app.delete("/students", (req: Request, res: Response) => {
 });
 
 // GET /api/me
+app.get("/me", (req: Request, res: Response) => {
+	const itsme : {
+		fullname: string;
+		studentId: string;
+	} = {
+		fullname : "Kittipat Namjak",
+		studentId : "680610654"
+	};
+  return res.status(200).json({
+	 success:true,
+	 data : itsme
+  });
+});
 
 app.listen(port, async () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
