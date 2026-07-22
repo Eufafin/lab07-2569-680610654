@@ -190,16 +190,11 @@ app.delete("/students", (req: Request, res: Response) => {
 
 // GET /api/me
 app.get("/me", (req: Request, res: Response) => {
-	const itsme : {
-		fullname: string;
-		studentId: string;
-	} = {
-		fullname : "Kittipat Namjak",
-		studentId : "680610654"
-	};
+	
   return res.status(200).json({
 	 success:true,
-	 data : itsme
+	 fullname : "Kittipat Namjak",
+		studentId : "680610654"
   });
 });
 
